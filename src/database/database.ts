@@ -14,13 +14,14 @@ const initializeDatabase = () => {
             "image TEXT," +
             "price REAL," +
             "remainingValue REAL" +
-            "percentage REAL" +
             ");",
           [],
           () => {
+            console.log("Table created successfully");
             resolve();
           },
           (_, error) => {
+            console.log(error);
             reject(error);
             return false;
           }
@@ -90,15 +91,14 @@ const createItem = (
   title: string,
   image: string,
   price: number,
-  remainingValue: number,
-  percentage: number
+  remainingValue: number
 ) => {
   return new Promise<number>((resolve, reject) => {
     db.transaction(
       (tx) => {
         tx.executeSql(
-          "INSERT INTO Items (title, image, price, remainingValue, percentage) VALUES (?, ?, ?, ?, ?);",
-          [title, image, price, remainingValue, percentage],
+          "INSERT INTO Items (title, image, price, remainingValue) VALUES (?, ?, ?, ?);",
+          [title, image, price, remainingValue],
           (_, { insertId }) => {
             insertId ? resolve(insertId) : reject;
             return true;
@@ -124,7 +124,6 @@ const patchItemById = (
     image: string;
     price: number;
     remainingValue: number;
-    percentage: number;
   }
 ) => {
   const { title, image, price, remainingValue } = updates;
@@ -132,7 +131,7 @@ const patchItemById = (
     db.transaction(
       (tx) => {
         tx.executeSql(
-          "UPDATE Items SET title = ?, image = ?, price = ?, remainingValue = ?, percentage = ? WHERE id = ?;",
+          "UPDATE Items SET title = ?, image = ?, price = ?, remainingValue = ? WHERE id = ?;",
           [title, image, price, remainingValue, id],
           (_, { rowsAffected }) => {
             resolve(rowsAffected);

@@ -7,14 +7,14 @@ import { useProductViewModel } from "viewmodel";
 const mockData: ProductCardType = {
   id: 1,
   image:
-    "https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1050&q=80",
+    "https://images.kabum.com.br/produtos/fotos/238671/console-sony-playstation-5_1634132554_gg.jpg",
   title: "PlayStation 5",
   price: 100,
   remainingValue: 100,
   percentage: 100,
 };
 
-export const ProductCardDetail = (product: ProductCardType) => {
+export const ProductCardDetail = () => {
   const { price, percentage, remainingValue } = useProductViewModel({
     price: mockData.price,
     remainingValue: mockData.remainingValue,

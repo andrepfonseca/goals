@@ -8,15 +8,20 @@ import { clearData, seedData } from "utils/manageDb";
 export const Progress = () => {
   const [items, setItems] = React.useState<ProductCardType[]>([]);
   const getAll = async () => {
-    const allItems = await getAllItems();
+    let allItems;
+    allItems = await getAllItems();
+    if (!allItems.length) {
+      await seedData();
+      allItems = await getAllItems();
+    }
     console.log(allItems);
     setItems(allItems);
     return allItems;
   };
 
   useEffect(() => {
-    seedData();
     getAll();
+    // clearData();
   }, []);
 
   return (

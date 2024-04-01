@@ -1,11 +1,10 @@
 import React from "react";
 import { Image, Platform, View } from "react-native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import { Home } from "../screens/Home";
-import { Login } from "screens/Login";
 import { Progress } from "../screens/Progress";
 import Svg, { Path } from "react-native-svg";
 import { ProductCardDetail } from "screens/ProductCardDetail";
+import { ProductCardType } from "components/ProductCard";
 
 const { Navigator, Screen } = createBottomTabNavigator();
 
@@ -45,8 +44,6 @@ export function AppRoutes() {
           ),
         }}
       />
-      <Screen name="Home" component={Home} />
-      <Screen name="Login" component={Login} />
     </Navigator>
   );
 }
