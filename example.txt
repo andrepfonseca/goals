@@ -1,0 +1,31 @@
+
+      try {
+        await initializeDatabase();
+        console.log('Database initialized');
+
+        // Creating a new item
+        const newItemId = await createItem('New Item', 'newitem.jpg', 20.99, 10);
+        console.log('New Item ID:', newItemId);
+
+        // Getting all items
+        const allItems = await getAllItems();
+        console.log('All Items:', allItems);
+
+        // Getting an item by ID
+        const itemId = 1; // Example ID
+        const itemById = await getItemById(itemId);
+        console.log(`Item with ID ${itemId}:`, itemById);
+
+        // Patching an item by ID
+        const updates = { price: 25.99 }; // Example updates
+        const rowsAffected = await patchItemById(itemId, updates);
+        console.log('Rows affected by patch:', rowsAffected);
+
+        // Deleting an item by ID
+        const rowsDeleted = await deleteItemById(itemId);
+        console.log('Rows affected by deletion:', rowsDeleted);
+      } catch (error) {
+        console.error('Error:', error);
+      }
+
+
