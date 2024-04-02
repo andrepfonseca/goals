@@ -1,49 +1,25 @@
-import React from "react";
-import { Image, Platform, View } from "react-native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import { Progress } from "../screens/Progress";
-import Svg, { Path } from "react-native-svg";
+import { NavigationContainer } from "@react-navigation/native";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import React from "react";
 import { ProductCardDetail } from "screens/ProductCardDetail";
-import { ProductCardType } from "components/ProductCard";
+import { Progress } from "../screens/Progress";
 
 const { Navigator, Screen } = createBottomTabNavigator();
 
+const Stack = createNativeStackNavigator();
+
 export function AppRoutes() {
   return (
-    <Navigator
-      screenOptions={{
-        headerShown: false,
-        tabBarActiveTintColor: "black",
-        tabBarInactiveTintColor: "gray",
-        tabBarLabelPosition: "beside-icon",
-        tabBarStyle: {
-          height: 88,
-          paddingVertical: Platform.OS === "ios" ? 20 : 0,
-        },
-      }}
-    >
-      <Screen
+    // <NavigationContainer>
+    <Stack.Navigator>
+      <Stack.Screen
         name="Progress"
         component={Progress}
-        options={{
-          tabBarIcon: ({ size, color }) => (
-            <View
-              style={{ backgroundColor: color, width: size, height: size }}
-            />
-          ),
-        }}
+        options={{ title: "Progress" }}
       />
-      <Screen
-        name="Product Card Detail"
-        component={ProductCardDetail}
-        options={{
-          tabBarIcon: ({ size, color }) => (
-            <View
-              style={{ backgroundColor: color, width: size, height: size }}
-            />
-          ),
-        }}
-      />
-    </Navigator>
+      <Stack.Screen name="ProductCardDetails" component={ProductCardDetail} />
+    </Stack.Navigator>
+    // </NavigationContainer>
   );
 }

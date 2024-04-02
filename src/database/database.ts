@@ -9,12 +9,12 @@ const initializeDatabase = () => {
       (tx) => {
         tx.executeSql(
           "CREATE TABLE IF NOT EXISTS Items (" +
-            "id INTEGER PRIMARY KEY AUTOINCREMENT," +
-            "title TEXT," +
-            "image TEXT," +
-            "price REAL," +
-            "remainingValue REAL" +
-            ");",
+          "id INTEGER PRIMARY KEY AUTOINCREMENT," +
+          "title TEXT," +
+          "image TEXT," +
+          "price REAL," +
+          "remainingValue REAL" +
+          ");",
           [],
           () => {
             console.log("Table created successfully");
@@ -69,6 +69,15 @@ const getItemById = (id: number) => {
           (_, { rows }) => {
             if (rows.length > 0) {
               resolve(rows.item(0));
+              // resolve({
+              //   id: 1,
+              //   image:
+              //     "https://images.kabum.com.br/produtos/fotos/238671/console-sony-playstation-5_1634132554_gg.jpg",
+              //   title: "PlayStation 5",
+              //   price: 100,
+              //   remainingValue: 100,
+              //   percentage: 100,
+              // });
             } else {
               resolve(null);
             }

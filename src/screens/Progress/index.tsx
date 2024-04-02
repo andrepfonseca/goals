@@ -1,22 +1,23 @@
-import React, { useEffect } from "react";
-import { FlatList, SafeAreaView, View } from "react-native";
-import { styles } from "./styles";
-import { ProductCard, Typography, ProductCardType } from "components";
+import { ProductCard, ProductCardType, Typography } from "components";
 import { getAllItems } from "database";
-import { clearData, seedData } from "utils/manageDb";
+import React, { useEffect } from "react";
+import { FlatList, SafeAreaView, TouchableOpacity, View } from "react-native";
+import { seedData } from "utils/manageDb";
+import { styles } from "./styles";
 
-export const Progress = () => {
+export const Progress = ({ navigation }: any) => {
   const [items, setItems] = React.useState<ProductCardType[]>([]);
   const getAll = async () => {
     let allItems;
+    await seedData();
     allItems = await getAllItems();
-    if (!allItems.length) {
-      await seedData();
-      allItems = await getAllItems();
-    }
-    console.log(allItems);
+    // if (!allItems.length) {
+    //     await seedData();
+    // allItems = await getAllItems();
+    // }
+    // console.log(allItems);
     setItems(allItems);
-    return allItems;
+    // return allItems;
   };
 
   useEffect(() => {
@@ -41,7 +42,16 @@ export const Progress = () => {
           }
           data={items}
           keyExtractor={(item) => item.id.toString()}
-          renderItem={({ item }) => <ProductCard {...item} />}
+          renderItem={({ item }) => (
+            <TouchableOpacity
+              key={item.id}
+              onPress={() =>
+                navigation.navigate("ProductCardDetails", { id: item.id })
+              }
+            >
+              <ProductCard {...item} />
+            </TouchableOpacity>
+          )}
           ItemSeparatorComponent={() => <View style={styles.separator} />}
         />
       </View>

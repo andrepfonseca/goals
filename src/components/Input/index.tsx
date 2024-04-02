@@ -4,10 +4,11 @@ import { styles } from "./styles";
 
 interface InputProps {
   placeholder?: string;
-  onChangeText?: (text: string) => void;
+  onChangeText?: React.Dispatch<React.SetStateAction<any>>;
   value?: string;
   style?: TextStyle;
   containerStyle?: ViewStyle;
+  type?: "numeric" | "default";
 }
 
 export const Input: React.FC<InputProps> = ({
@@ -15,15 +16,16 @@ export const Input: React.FC<InputProps> = ({
   onChangeText,
   value,
   style,
+  type = "default",
 }) => {
   return (
     <TextInput
-      placeholder={placeholder}
       onChangeText={onChangeText}
       value={value}
       style={[styles.input, style]}
       placeholderTextColor="#999999"
       underlineColorAndroid="transparent"
+      keyboardType={type}
     />
   );
 };
