@@ -1,7 +1,7 @@
 import { AppRoutes } from "@routes/app.routes";
 import { NavigationContainer } from "@react-navigation/native";
 import { useEffect } from "react";
-import { deleteDatabase, initializeDatabase } from "database";
+import { initializeDatabase } from "database";
 
 export default function App() {
   useEffect(() => {

@@ -4,6 +4,7 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import React from "react";
 import { ProductCardDetail } from "screens/ProductCardDetail";
 import { Progress } from "../screens/Progress";
+import { AddProductCard } from "screens/AddProductCard";
 
 const { Navigator, Screen } = createBottomTabNavigator();
 
@@ -19,6 +20,7 @@ export function AppRoutes() {
         options={{ title: "Progress" }}
       />
       <Stack.Screen name="ProductCardDetails" component={ProductCardDetail} />
+      <Stack.Screen name="AddProductCard" component={AddProductCard} />
     </Stack.Navigator>
     // </NavigationContainer>
   );

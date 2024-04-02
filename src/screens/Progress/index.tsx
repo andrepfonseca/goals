@@ -1,4 +1,9 @@
-import { ProductCard, ProductCardType, Typography } from "components";
+import {
+  IconButton,
+  ProductCard,
+  ProductCardType,
+  Typography,
+} from "components";
 import { getAllItems } from "database";
 import React, { useEffect } from "react";
 import { FlatList, SafeAreaView, TouchableOpacity, View } from "react-native";
@@ -33,9 +38,18 @@ export const Progress = ({ navigation }: any) => {
           contentContainerStyle={{ paddingVertical: 20 }}
           ListHeaderComponent={
             <View style={styles.header}>
-              <Typography variant="pageTitle" style={styles.title}>
-                Seu progresso
-              </Typography>
+              <View style={styles.subTitle}>
+                <Typography variant="pageTitle" style={styles.title}>
+                  Seu progresso
+                </Typography>
+                <IconButton
+                  icon="plus"
+                  onPress={() => {
+                    navigation.navigate("AddProductCard");
+                  }}
+                  style={styles.addButton}
+                />
+              </View>
               <Typography style={styles.percentage}>50%</Typography>
               <View style={styles.progressBar}></View>
             </View>
