@@ -9,15 +9,12 @@ export const Progress = ({ navigation }: any) => {
   const [items, setItems] = React.useState<ProductCardType[]>([]);
   const getAll = async () => {
     let allItems;
-    await seedData();
     allItems = await getAllItems();
-    // if (!allItems.length) {
-    //     await seedData();
-    // allItems = await getAllItems();
-    // }
-    // console.log(allItems);
+    if (!allItems.length) {
+      await seedData();
+      allItems = await getAllItems();
+    }
     setItems(allItems);
-    // return allItems;
   };
 
   useEffect(() => {

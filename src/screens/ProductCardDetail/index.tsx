@@ -6,36 +6,14 @@ import { useProductViewModel } from "viewmodel";
 import { getAllItems, getItemById, patchItemById } from "database";
 import { seedData } from "utils/manageDb";
 
-const mockData: ProductCardType = {
-  id: 1,
-  image:
-    "https://images.kabum.com.br/produtos/fotos/238671/console-sony-playstation-5_1634132554_gg.jpg",
-  title: "PlayStation 5",
-  price: 100,
-  remainingValue: 100,
-  percentage: 100,
-};
-
 export const ProductCardDetail = ({ route }: any) => {
   const { id } = route.params;
   const [item, setItem] = React.useState<ProductCardType>();
   const [priceInput, setPriceInput] = useState();
 
-  // const [price, setPrice] = React.useState<string>();
-  // const [percentage, setPercentage] = React.useState<string>();
-  // const [remainingValue, setRemainingValue] = React.useState<string>();
-
-  let price, percentage, remainingValue;
-
-  if (item) {
-    const data = useProductViewModel({
-      price: item.price,
-      remainingValue: item.remainingValue,
-    });
-    price = data.price;
-    percentage = data.percentage;
-    remainingValue = data.remainingValue;
-  }
+  const [price, setPrice] = React.useState<string>();
+  const [percentage, setPercentage] = React.useState<string>();
+  const [remainingValue, setRemainingValue] = React.useState<string>();
 
   const getItem = async () => {
     let allItems;
@@ -54,6 +32,48 @@ export const ProductCardDetail = ({ route }: any) => {
     getItem();
     // clearData();
   }, []);
+
+  useEffect(() => {
+    if (item) {
+      const data = useProductViewModel({
+        price: item.price,
+        remainingValue: item.remainingValue,
+      });
+      setPrice(data.price);
+      setPercentage(data.percentage);
+      setRemainingValue(data.remainingValue);
+    }
+  }, [item]);
+
+  const handleAction = (
+    item: ProductCardType,
+    priceInput: number,
+    action: "add" | "sub"
+  ) => {
+    patchItemById(item.id, {
+      ...item,
+      remainingValue:
+        action === "add"
+          ? add(item.remainingValue, priceInput)
+          : sub(item.remainingValue, priceInput),
+    }).then(() =>
+      setItem({
+        ...item,
+        remainingValue:
+          action === "add"
+            ? add(item.remainingValue, priceInput)
+            : sub(item.remainingValue, priceInput),
+      })
+    );
+  };
+
+  const sub = (remainingValue: number, priceInput: number) => {
+    return Number(remainingValue) - Number(priceInput);
+  };
+
+  const add = (remainingValue: number, priceInput: number) => {
+    return Number(remainingValue) + Number(priceInput);
+  };
 
   return (
     item && (
@@ -81,29 +101,34 @@ export const ProductCardDetail = ({ route }: any) => {
                 <Typography variant="caption">
                   Seu progresso: {percentage}
                 </Typography>
-                <View style={styles.progressBar} />
+                <View style={{ ...styles.progressBar }}>
+                  <View
+                    style={{
+                      ...styles.progressBar,
+                      backgroundColor: "green",
+                      marginTop: 0,
+                      width: `${
+                        percentage ? Number(percentage.replace("%", "")) : 0
+                      }%`,
+                    }}
+                  />
+                </View>
               </View>
             </View>
             <View style={styles.editContainer}>
-              <Input onChangeText={setPriceInput} />
+              <Input onChangeText={setPriceInput} type="numeric" />
               {priceInput && (
                 <View style={styles.buttonsContainer}>
                   <IconButton
                     icon="plus"
                     onPress={() => {
-                      patchItemById(item.id, {
-                        ...item,
-                        remainingValue: item.remainingValue + priceInput,
-                      });
-                      console.warn(item.remainingValue + priceInput);
+                      handleAction(item, priceInput, "sub");
                     }}
                     style={styles.addButton}
                   />
                   <IconButton
                     icon="minus"
-                    onPress={() => {
-                      console.log(mockData.remainingValue - priceInput);
-                    }}
+                    onPress={() => handleAction(item, priceInput, "add")}
                     style={styles.removeButton}
                   />
                 </View>
