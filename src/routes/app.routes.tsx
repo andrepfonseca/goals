@@ -34,7 +34,16 @@ export function AppRoutes() {
           statusBarStyle: "light",
         }}
       />
-      <Stack.Screen name="AddProductCard" component={AddProductCard} />
+      <Stack.Screen
+        name="AddProductCard"
+        component={AddProductCard}
+        options={{
+          headerShown: false,
+          statusBarColor: "#1B1B1B",
+          statusBarTranslucent: true,
+          statusBarStyle: "light",
+        }}
+      />
     </Stack.Navigator>
     // </NavigationContainer>
   );

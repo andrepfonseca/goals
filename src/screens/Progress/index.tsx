@@ -9,18 +9,13 @@ import { useFocusEffect } from "@react-navigation/native";
 import { getAllItems } from "database";
 import React from "react";
 import { FlatList, SafeAreaView, TouchableOpacity, View } from "react-native";
-import { clearData, seedData } from "utils/manageDb";
 import { styles } from "./styles";
 
 export const Progress = ({ navigation }: any) => {
   const [items, setItems] = React.useState<ProductCardType[]>([]);
   const getAll = async () => {
-    let allItems;
-    allItems = await getAllItems();
-    if (!allItems.length) {
-      await seedData();
-      allItems = await getAllItems();
-    }
+    const allItems = await getAllItems();
+
     setItems(allItems);
   };
 
@@ -64,6 +59,7 @@ export const Progress = ({ navigation }: any) => {
                   }}
                   disabled={false}
                   style={styles.addButton}
+                  color="black"
                 />
               </View>
               <ProgressBar size="large" progress={percentage()} />
@@ -85,7 +81,7 @@ export const Progress = ({ navigation }: any) => {
           ListEmptyComponent={
             <View style={styles.emptyList}>
               <Typography variant="title" style={styles.emptyText}>
-                Não há itens para mostrar
+                Adicione um produto para começar
               </Typography>
             </View>
           }

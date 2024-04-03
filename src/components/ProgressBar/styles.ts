@@ -3,11 +3,11 @@ import { StyleSheet } from "react-native";
 export const styles = StyleSheet.create({
   progressBarContainer: {
     width: "100%",
-    height: 20,
+    height: 15,
     marginTop: 5,
     borderRadius: 9,
     overflow: "hidden",
-    borderWidth: 3,
+    borderWidth: 1,
     borderColor: "#D3FA3A",
     padding: 2,
   },

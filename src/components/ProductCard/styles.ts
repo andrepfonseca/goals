@@ -14,7 +14,7 @@ export const styles = StyleSheet.create({
     elevation: 100, // Elevação para sombra no Android
   },
   image: {
-    height: "60%",
+    height: 100,
     width: 100,
     borderRadius: 10,
   },

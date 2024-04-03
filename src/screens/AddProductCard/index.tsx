@@ -1,11 +1,9 @@
 import React, { useEffect, useState } from "react";
+import { Asset } from "expo-asset";
 import {
   SafeAreaView,
   View,
-  Button,
-  TextInput,
   Image,
-  Touchable,
   TouchableOpacity,
   ScrollView,
   KeyboardAvoidingView,
@@ -14,15 +12,18 @@ import {
 import { styles } from "./styles";
 import * as ImagePicker from "expo-image-picker";
 
-import { Typography } from "components";
+import { IconButton, Input, MaskedInput, Typography } from "components";
 import { createItem } from "database";
+import { formatToNumber } from "utils/formatCurrencyToNumber";
 
 export const AddProductCard = ({ navigation }: any) => {
-  const [priceInput, setPriceInput] = useState<number>(0);
+  const [priceInput, setPriceInput] = useState("");
   const [titleInput, setTitleInput] = useState("");
   const [imageInput, setImageInput] = useState<
     Array<ImagePicker.ImagePickerAsset>
   >([]);
+
+  const [isFormValid, setIsFormValid] = useState(false);
 
   const handleImageSelection = async () => {
     let result = await ImagePicker.launchImageLibraryAsync({
@@ -37,14 +38,22 @@ export const AddProductCard = ({ navigation }: any) => {
     }
   };
 
+  useEffect(() => {
+    if (priceInput && titleInput) {
+      setIsFormValid(true);
+    } else {
+      setIsFormValid(false);
+    }
+  }, [priceInput, titleInput, imageInput]);
+
   const handleFormSubmit = async () => {
+    const price = formatToNumber(priceInput);
+    const defaultImageUri = Asset.fromModule(
+      require("../../assets/defaultImage.jpg")
+    ).uri;
+    const image = imageInput[0]?.uri || defaultImageUri;
     try {
-      const response = await createItem(
-        titleInput,
-        imageInput[0]?.uri,
-        priceInput,
-        priceInput
-      );
+      const response = await createItem(titleInput, image, price, price);
 
       if (response) {
         navigation.navigate("Progress");
@@ -64,6 +73,18 @@ export const AddProductCard = ({ navigation }: any) => {
         }}
       >
         <ScrollView style={styles.content}>
+          <View style={styles.goBackButtonContainer}>
+            <IconButton
+              icon={"chevron-left"}
+              onPress={() => {
+                navigation.goBack();
+              }}
+              color="#D3FA3A"
+              backgroundColor="#1b1b1b"
+              disabled={false}
+              size={30}
+            />
+          </View>
           <TouchableOpacity onPress={handleImageSelection}>
             {imageInput[0]?.uri ? (
               <Image
@@ -80,28 +101,31 @@ export const AddProductCard = ({ navigation }: any) => {
             )}
           </TouchableOpacity>
           <View style={styles.formContainer}>
-            <Typography variant="pageTitle">
+            <Typography variant="title" style={{ color: "white" }}>
               {"Adicione o nome e valor do produto:"}
             </Typography>
-            <TextInput
-              placeholder="Title"
-              value={titleInput}
-              onChangeText={setTitleInput}
+            <Input value={titleInput} onChangeText={setTitleInput} />
+            <MaskedInput
+              onChangeText={setPriceInput}
+              mask="money"
+              type="numeric"
             />
-            <TextInput
-              placeholder="Preço Total"
-              value={priceInput?.toString()}
-              onChangeText={(text: string) => setPriceInput(Number(text))}
-            />
-            <TouchableOpacity style={styles.button} onPress={handleFormSubmit}>
+            <TouchableOpacity
+              style={[
+                styles.button,
+                !isFormValid && { backgroundColor: "#B6B4B4" },
+              ]}
+              onPress={handleFormSubmit}
+              disabled={!isFormValid}
+            >
               <Typography
                 variant="body"
                 style={{
-                  color: "#FFFFFF",
+                  color: "black",
                   fontWeight: "500",
                 }}
               >
-                {"SALVAR"}
+                {"Salvar"}
               </Typography>
             </TouchableOpacity>
           </View>
