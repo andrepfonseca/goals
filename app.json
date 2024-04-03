@@ -1,6 +1,6 @@
 {
   "expo": {
-    "name": "goals",
+    "name": "Goals",
     "slug": "goals",
     "version": "1.0.0",
     "orientation": "portrait",
@@ -19,6 +19,8 @@
       "requireFullScreen": true
     },
     "android": {
+      "package": "com.goals.android",
+      "versionCode": 2,
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
@@ -34,7 +36,12 @@
           "initialOrientation": "PORTRAIT_UP"
         }
       ]
-    ]
-    
+    ],
+    "extra": {
+      "eas": {
+        "projectId": "641dec6b-2926-469b-a711-7e5bfc68aee2"
+      }
+    },
+    "owner": "andrepfonseca"
   }
 }
