@@ -1,4 +1,4 @@
-import { View } from "react-native";
+import { DimensionValue, View } from "react-native";
 import { styles } from "./styles";
 import { Typography } from "components";
 
@@ -23,7 +23,12 @@ export const ProgressBar = ({ size, progress }: ProgressBarProps) => {
             : styles.progressBarContainer
         }
       >
-        <View style={styles.progress}></View>
+        <View
+          style={[
+            styles.progress,
+            { width: progress as DimensionValue | undefined },
+          ]}
+        ></View>
       </View>
     </View>
   );

@@ -23,7 +23,8 @@ export const styles = StyleSheet.create({
   },
   progress: {
     backgroundColor: "#D3FA3A",
-    width: "100%",
+    minWidth: "0%",
+    maxWidth: "100%",
     height: "100%",
     borderRadius: 9,
   },

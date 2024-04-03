@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from "react";
 import {
+  Alert,
   Image,
   KeyboardAvoidingView,
   Platform,
   SafeAreaView,
   ScrollView,
+  TouchableOpacity,
   View,
 } from "react-native";
 import { styles } from "./styles";
@@ -16,9 +18,15 @@ import {
   Typography,
 } from "components";
 import { useProductViewModel } from "viewmodel";
-import { getAllItems, getItemById, patchItemById } from "database";
+import {
+  deleteItemById,
+  getAllItems,
+  getItemById,
+  patchItemById,
+} from "database";
 import { seedData } from "utils/manageDb";
 import { formatToNumber } from "utils/formatCurrencyToNumber";
+import * as ImagePicker from "expo-image-picker";
 
 export const ProductCardDetail = ({ navigation, route }: any) => {
   const { id } = route.params;
@@ -28,6 +36,33 @@ export const ProductCardDetail = ({ navigation, route }: any) => {
   const [price, setPrice] = React.useState<string>();
   const [percentage, setPercentage] = React.useState<string>();
   const [remainingValue, setRemainingValue] = React.useState<string>();
+
+  const [imageInput, setImageInput] = useState<
+    Array<ImagePicker.ImagePickerAsset>
+  >([]);
+
+  const handleImageSelection = async (item: ProductCardType) => {
+    let result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.Images,
+      allowsEditing: true,
+      aspect: [4, 4],
+      quality: 1,
+    });
+
+    if (!result.canceled) {
+      patchItemById(item.id, {
+        ...item,
+        image: result.assets[0].uri,
+      }).then(
+        () =>
+          result.assets &&
+          setItem({
+            ...item,
+            image: result.assets[0]?.uri,
+          })
+      );
+    }
+  };
 
   const getItem = async () => {
     let allItems;
@@ -42,9 +77,20 @@ export const ProductCardDetail = ({ navigation, route }: any) => {
     // return allItems;
   };
 
+  const handleDeleteItem = async () => {
+    try {
+      const response = await deleteItemById(id);
+
+      if (response) {
+        navigation.navigate("Progress");
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   useEffect(() => {
     getItem();
-    // clearData();
   }, []);
 
   useEffect(() => {
@@ -65,10 +111,13 @@ export const ProductCardDetail = ({ navigation, route }: any) => {
     action: "add" | "sub"
   ) => {
     const price = formatToNumber(priceInput);
-    const newValue = action === "add" ? price + item.price : price - item.price;
+    const newValue =
+      action === "add"
+        ? price + item.remainingValue
+        : item.remainingValue - price;
 
     if (newValue < 0 || newValue > item.price) {
-      console.log("Invalid value");
+      console.log("Invalid value", newValue);
       return;
     }
     patchItemById(item.id, {
@@ -117,9 +166,46 @@ export const ProductCardDetail = ({ navigation, route }: any) => {
                   disabled={false}
                   size={30}
                 />
+
+                <IconButton
+                  icon={"trash"}
+                  onPress={() => {
+                    Alert.alert(
+                      "Deletar",
+                      "Tem certeza que deseja deletar esse item? ",
+                      [
+                        {
+                          text: "Cancelar",
+                          style: "cancel",
+                        },
+                        {
+                          text: "OK",
+                          onPress: handleDeleteItem,
+                        },
+                      ]
+                    );
+                  }}
+                  color="#D3FA3A"
+                  backgroundColor="#1b1b1b"
+                  disabled={false}
+                  size={30}
+                />
               </View>
               <View style={styles.imageContainer}>
-                <Image src={item.image} style={styles.image} />
+                <TouchableOpacity
+                  onPress={() => handleImageSelection(item)}
+                  style={{
+                    position: "relative",
+                  }}
+                >
+                  <Image src={item.image} style={styles.image} />
+                  <IconButton
+                    icon="edit"
+                    size={15}
+                    style={styles.editImage}
+                    onPress={() => {}}
+                  />
+                </TouchableOpacity>
               </View>
               <Typography variant="pageTitle" style={styles.title}>
                 {item.title}
@@ -144,7 +230,7 @@ export const ProductCardDetail = ({ navigation, route }: any) => {
                   </Typography>
                 </View>
                 <View style={styles.progressContainer}>
-                  <ProgressBar size="large" progress="100%" />
+                  <ProgressBar size="large" progress={percentage || "0%"} />
                 </View>
               </View>
               <View style={styles.editContainer}>
@@ -155,13 +241,11 @@ export const ProductCardDetail = ({ navigation, route }: any) => {
                 />
                 <View style={styles.buttonsContainer}>
                   <IconButton
-                    icon="plus"
-                    onPress={() => {
-                      handleAction(item, priceInput!, "sub");
-                    }}
+                    icon="minus"
+                    onPress={() => handleAction(item, priceInput!, "add")}
                     color="black"
                     style={[
-                      styles.addButton,
+                      styles.removeButton,
                       !priceInput && {
                         backgroundColor: "#B6B4B4",
                       },
@@ -169,11 +253,13 @@ export const ProductCardDetail = ({ navigation, route }: any) => {
                     disabled={!priceInput}
                   />
                   <IconButton
-                    icon="minus"
-                    onPress={() => handleAction(item, priceInput!, "add")}
+                    icon="plus"
+                    onPress={() => {
+                      handleAction(item, priceInput!, "sub");
+                    }}
                     color="black"
                     style={[
-                      styles.removeButton,
+                      styles.addButton,
                       !priceInput && {
                         backgroundColor: "#B6B4B4",
                       },

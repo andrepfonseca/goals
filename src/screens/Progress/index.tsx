@@ -9,7 +9,7 @@ import { useFocusEffect } from "@react-navigation/native";
 import { getAllItems } from "database";
 import React from "react";
 import { FlatList, SafeAreaView, TouchableOpacity, View } from "react-native";
-import { seedData } from "utils/manageDb";
+import { clearData, seedData } from "utils/manageDb";
 import { styles } from "./styles";
 
 export const Progress = ({ navigation }: any) => {
@@ -54,18 +54,19 @@ export const Progress = ({ navigation }: any) => {
           ListHeaderComponent={
             <View style={styles.header}>
               <View style={styles.subTitle}>
+                <Typography variant="pageTitle" style={styles.title}>
+                  Seu progresso
+                </Typography>
                 <IconButton
                   icon="plus"
                   onPress={() => {
                     navigation.navigate("AddProductCard");
                   }}
+                  disabled={false}
                   style={styles.addButton}
                 />
-                <Typography variant="pageTitle" style={styles.title}>
-                  Seu progresso
-                </Typography>
-                <ProgressBar size="large" progress={percentage()} />
               </View>
+              <ProgressBar size="large" progress={percentage()} />
             </View>
           }
           data={items}
