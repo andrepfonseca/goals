@@ -17,7 +17,7 @@ import * as ImagePicker from "expo-image-picker";
 import { Typography } from "components";
 import { createItem } from "database";
 
-export const AddProductCard = () => {
+export const AddProductCard = ({ navigation }: any) => {
   const [priceInput, setPriceInput] = useState<number>(0);
   const [titleInput, setTitleInput] = useState("");
   const [imageInput, setImageInput] = useState<
@@ -39,22 +39,27 @@ export const AddProductCard = () => {
   };
 
   const handleFormSubmit = async () => {
-    const response = await createItem(
-      titleInput,
-      imageInput[0]?.uri,
-      priceInput,
-      priceInput
-    );
+    try {
+      const response = await createItem(
+        titleInput,
+        imageInput[0]?.uri,
+        priceInput,
+        priceInput
+      );
 
-    console.log(response);
-    // Handle form submission logic
+      if (response) {
+        navigation.navigate("Progress");
+      }
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (
     <SafeAreaView style={styles.container}>
       <KeyboardAvoidingView
         behavior={Platform.OS === "ios" ? "padding" : "height"}
-        keyboardVerticalOffset={Platform.OS === "ios" ? 0 : 50}
+        keyboardVerticalOffset={Platform.OS === "ios" ? 0 : 30}
         style={{
           flex: 1,
         }}
@@ -80,14 +85,14 @@ export const AddProductCard = () => {
               {"Adicione o nome e valor do produto:"}
             </Typography>
             <TextInput
-              placeholder="Preço Total"
-              value={priceInput?.toString()}
-              onChangeText={(text: string) => setPriceInput(Number(text))}
-            />
-            <TextInput
               placeholder="Title"
               value={titleInput}
               onChangeText={setTitleInput}
+            />
+            <TextInput
+              placeholder="Preço Total"
+              value={priceInput?.toString()}
+              onChangeText={(text: string) => setPriceInput(Number(text))}
             />
             <TouchableOpacity style={styles.button} onPress={handleFormSubmit}>
               <Typography
