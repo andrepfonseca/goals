@@ -50,4 +50,15 @@ export const styles = StyleSheet.create({
   separator: {
     height: 20,
   },
+  subTitle: {
+    justifyContent: "space-between",
+    flexDirection: "row",
+  },
+  addButton: {
+    height: 45,
+    width: 45,
+    borderRadius: 25,
+    color: "blue",
+    backgroundColor: "#3690d9",
+  },
 });
