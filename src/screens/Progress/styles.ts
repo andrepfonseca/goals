@@ -37,6 +37,7 @@ export const styles = StyleSheet.create({
     height: 20,
   },
   subTitle: {
+    display: "flex",
     justifyContent: "space-between",
     flexDirection: "row",
   },
@@ -44,8 +45,7 @@ export const styles = StyleSheet.create({
     height: 45,
     width: 45,
     borderRadius: 25,
-    color: "blue",
-    backgroundColor: "#3690d9",
+    backgroundColor: "#D3FA3A",
   },
   emptyList: {
     display: "flex",

@@ -54,18 +54,20 @@ export const Progress = ({ navigation }: any) => {
           ListHeaderComponent={
             <View style={styles.header}>
               <View style={styles.subTitle}>
+                <Typography variant="pageTitle" style={styles.title}>
+                  Seu progresso
+                </Typography>
                 <IconButton
                   icon="plus"
                   onPress={() => {
                     navigation.navigate("AddProductCard");
                   }}
                   style={styles.addButton}
+                  color="black"
+                  disabled={false}
                 />
-                <Typography variant="pageTitle" style={styles.title}>
-                  Seu progresso
-                </Typography>
-                <ProgressBar size="large" progress={percentage()} />
               </View>
+              <ProgressBar size="large" progress={percentage()} />
             </View>
           }
           data={items}

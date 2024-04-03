@@ -23,7 +23,7 @@ export const ProgressBar = ({ size, progress }: ProgressBarProps) => {
             : styles.progressBarContainer
         }
       >
-        <View style={styles.progress}></View>
+        <View style={[styles.progress]}></View>
       </View>
     </View>
   );
