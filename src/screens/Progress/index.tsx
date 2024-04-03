@@ -4,8 +4,9 @@ import {
   ProductCardType,
   Typography,
 } from "components";
+import { useFocusEffect } from "@react-navigation/native";
 import { getAllItems } from "database";
-import React, { useEffect } from "react";
+import React from "react";
 import { FlatList, SafeAreaView, TouchableOpacity, View } from "react-native";
 import { seedData } from "utils/manageDb";
 import { styles } from "./styles";
@@ -14,21 +15,34 @@ export const Progress = ({ navigation }: any) => {
   const [items, setItems] = React.useState<ProductCardType[]>([]);
   const getAll = async () => {
     let allItems;
-    await seedData();
     allItems = await getAllItems();
-    // if (!allItems.length) {
-    //     await seedData();
-    // allItems = await getAllItems();
-    // }
-    // console.log(allItems);
+    if (!allItems.length) {
+      await seedData();
+      allItems = await getAllItems();
+    }
     setItems(allItems);
-    // return allItems;
   };
 
-  useEffect(() => {
-    getAll();
-    // clearData();
-  }, []);
+  function percentage() {
+    const data = items.reduce(
+      (acc, item) => {
+        return {
+          price: Number(acc.price) + Number(item.price),
+          contribution:
+            Number(acc.contribution) +
+            (Number(item.price) - Number(item.remainingValue)),
+        };
+      },
+      { price: 0, contribution: 0 }
+    );
+    return `${Math.round((data.contribution / data.price) * 100)}%`;
+  }
+
+  useFocusEffect(
+    React.useCallback(() => {
+      getAll();
+    }, [])
+  );
 
   return (
     <SafeAreaView style={styles.container}>
@@ -50,8 +64,19 @@ export const Progress = ({ navigation }: any) => {
                   style={styles.addButton}
                 />
               </View>
-              <Typography style={styles.percentage}>50%</Typography>
-              <View style={styles.progressBar}></View>
+              <Typography style={styles.percentage}>{percentage()}</Typography>
+              <View style={styles.progressBar}>
+                <View
+                  style={{
+                    ...styles.progressBar,
+                    backgroundColor: "green",
+                    marginTop: 0,
+                    width: `${
+                      percentage ? Number(percentage().replace("%", "")) : 0
+                    }%`,
+                  }}
+                />
+              </View>
             </View>
           }
           data={items}

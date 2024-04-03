@@ -18,10 +18,12 @@ export const ProductCard = ({
   title,
   price,
   remainingValue,
-  percentage,
 }: ProductCardType) => {
-  const { price: formattedPrice, remainingValue: formattedRemainingValue } =
-    useProductCardViewController({ price, remainingValue });
+  const {
+    price: formattedPrice,
+    remainingValue: formattedRemainingValue,
+    percentage,
+  } = useProductCardViewController({ price, remainingValue });
 
   return (
     <View style={styles.card} key={id}>
@@ -52,7 +54,18 @@ export const ProductCard = ({
           <Typography variant="caption" style={styles.cardPercentage}>
             {percentage}
           </Typography>
-          <View style={styles.progressBar}></View>
+          <View style={styles.progressBar}>
+            <View
+              style={{
+                ...styles.progressBar,
+                backgroundColor: "green",
+                marginTop: 0,
+                width: `${
+                  percentage ? Number(percentage.replace("%", "")) : 0
+                }%`,
+              }}
+            />
+          </View>
         </View>
       </View>
     </View>
