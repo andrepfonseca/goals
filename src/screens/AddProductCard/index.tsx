@@ -49,7 +49,7 @@ export const AddProductCard = ({ navigation }: any) => {
   const handleFormSubmit = async () => {
     const price = formatToNumber(priceInput);
     const defaultImageUri = Asset.fromModule(
-      require("../../assets/defaultImage.jpg")
+      require("../../assets/noImage.jpg")
     ).uri;
     const image = imageInput[0]?.uri || defaultImageUri;
     try {
