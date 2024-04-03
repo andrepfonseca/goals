@@ -57,9 +57,9 @@ export const Progress = ({ navigation }: any) => {
                   onPress={() => {
                     navigation.navigate("AddProductCard");
                   }}
+                  disabled={false}
                   style={styles.addButton}
                   color="black"
-                  disabled={false}
                 />
               </View>
               <ProgressBar size="large" progress={percentage()} />

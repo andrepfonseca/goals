@@ -10,6 +10,9 @@ export const styles = StyleSheet.create({
     padding: 10,
   },
   goBackButtonContainer: {
+    display: "flex",
+    justifyContent: "space-between",
+    flexDirection: "row",
     width: "100%",
     marginBottom: 5,
   },
@@ -72,5 +75,11 @@ export const styles = StyleSheet.create({
   },
   whiteText: {
     color: "#fff",
+  },
+  editImage: {
+    position: "absolute",
+    bottom: 10,
+    right: 50,
+    backgroundColor: "#bbbb",
   },
 });

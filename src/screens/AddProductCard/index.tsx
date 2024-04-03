@@ -35,7 +35,6 @@ export const AddProductCard = ({ navigation }: any) => {
 
     if (!result.canceled) {
       setImageInput(result.assets);
-      console.log(result.assets);
     }
   };
 
@@ -60,7 +59,7 @@ export const AddProductCard = ({ navigation }: any) => {
         navigation.navigate("Progress");
       }
     } catch (error) {
-      console.log(error);
+      console.error(error);
     }
   };
 
