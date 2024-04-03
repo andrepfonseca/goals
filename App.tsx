@@ -1,7 +1,10 @@
 import { AppRoutes } from "@routes/app.routes";
-import { NavigationContainer } from "@react-navigation/native";
+import { DefaultTheme, NavigationContainer } from "@react-navigation/native";
 import { useEffect } from "react";
 import { initializeDatabase } from "database";
+import * as SplashScreen from "expo-splash-screen";
+
+SplashScreen.preventAutoHideAsync();
 
 export default function App() {
   useEffect(() => {
@@ -9,8 +12,10 @@ export default function App() {
       try {
         await initializeDatabase();
         console.log("Database initialized");
+        await SplashScreen.hideAsync();
       } catch (error) {
         console.error("Error:", error);
+        await SplashScreen.hideAsync();
       }
     };
 
@@ -25,8 +30,16 @@ export default function App() {
 
     initializeDB();
   }, []);
+
+  const MyTheme = {
+    ...DefaultTheme,
+    colors: {
+      ...DefaultTheme.colors,
+      background: "#1B1B1B",
+    },
+  };
   return (
-    <NavigationContainer>
+    <NavigationContainer theme={MyTheme}>
       <AppRoutes />
     </NavigationContainer>
   );

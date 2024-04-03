@@ -3,6 +3,7 @@ import {
   ProductCard,
   ProductCardType,
   Typography,
+  ProgressBar,
 } from "components";
 import { useFocusEffect } from "@react-navigation/native";
 import { getAllItems } from "database";
@@ -53,9 +54,6 @@ export const Progress = ({ navigation }: any) => {
           ListHeaderComponent={
             <View style={styles.header}>
               <View style={styles.subTitle}>
-                <Typography variant="pageTitle" style={styles.title}>
-                  Seu progresso
-                </Typography>
                 <IconButton
                   icon="plus"
                   onPress={() => {
@@ -63,19 +61,10 @@ export const Progress = ({ navigation }: any) => {
                   }}
                   style={styles.addButton}
                 />
-              </View>
-              <Typography style={styles.percentage}>{percentage()}</Typography>
-              <View style={styles.progressBar}>
-                <View
-                  style={{
-                    ...styles.progressBar,
-                    backgroundColor: "green",
-                    marginTop: 0,
-                    width: `${
-                      percentage ? Number(percentage().replace("%", "")) : 0
-                    }%`,
-                  }}
-                />
+                <Typography variant="pageTitle" style={styles.title}>
+                  Seu progresso
+                </Typography>
+                <ProgressBar size="large" progress={percentage()} />
               </View>
             </View>
           }
@@ -92,6 +81,13 @@ export const Progress = ({ navigation }: any) => {
             </TouchableOpacity>
           )}
           ItemSeparatorComponent={() => <View style={styles.separator} />}
+          ListEmptyComponent={
+            <View style={styles.emptyList}>
+              <Typography variant="title" style={styles.emptyText}>
+                Não há itens para mostrar
+              </Typography>
+            </View>
+          }
         />
       </View>
     </SafeAreaView>

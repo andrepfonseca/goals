@@ -10,19 +10,13 @@ export const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "space-around",
     alignSelf: "center",
-    backgroundColor: "white", // Cor de fundo do card
-    shadowColor: "#000", // Cor da sombra
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.25, // Opacidade da sombra
-    shadowRadius: 3.84,
-    elevation: 5, // Elevação para sombra no Android
+    backgroundColor: "#262626",
+    elevation: 100, // Elevação para sombra no Android
   },
   image: {
+    height: "60%",
     width: 100,
-    height: "90%",
+    borderRadius: 10,
   },
   info: {
     height: "100%",
@@ -35,6 +29,7 @@ export const styles = StyleSheet.create({
   cardTitle: {
     textAlign: "left",
     marginTop: 10,
+    color: "#fff",
   },
   valueContainer: {
     display: "flex",
@@ -46,10 +41,12 @@ export const styles = StyleSheet.create({
   valueTitle: {
     textAlign: "left",
     marginTop: 10,
+    color: "#fff",
   },
   value: {
     textAlign: "left",
     marginTop: 10,
+    color: "#fff",
   },
   progressBar: {
     width: "100%",

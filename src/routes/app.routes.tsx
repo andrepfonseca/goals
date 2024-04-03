@@ -13,13 +13,27 @@ const Stack = createNativeStackNavigator();
 export function AppRoutes() {
   return (
     // <NavigationContainer>
-    <Stack.Navigator>
+    <Stack.Navigator screenOptions={{ animation: "fade_from_bottom" }}>
       <Stack.Screen
         name="Progress"
         component={Progress}
-        options={{ title: "Progress" }}
+        options={{
+          headerShown: false,
+          statusBarColor: "#1B1B1B",
+          statusBarTranslucent: true,
+          statusBarStyle: "light",
+        }}
       />
-      <Stack.Screen name="ProductCardDetails" component={ProductCardDetail} />
+      <Stack.Screen
+        name="ProductCardDetails"
+        component={ProductCardDetail}
+        options={{
+          headerShown: false,
+          statusBarColor: "#1B1B1B",
+          statusBarTranslucent: true,
+          statusBarStyle: "light",
+        }}
+      />
       <Stack.Screen name="AddProductCard" component={AddProductCard} />
     </Stack.Navigator>
     // </NavigationContainer>

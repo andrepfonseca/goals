@@ -6,7 +6,7 @@ export const styles = StyleSheet.create({
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
-    backgroundColor: "#fff",
+    backgroundColor: "#1B1B1B",
   },
   header: {
     width: "100%",
@@ -15,6 +15,8 @@ export const styles = StyleSheet.create({
   },
   title: {
     textAlign: "left",
+    color: "#fff",
+    marginBottom: 10,
   },
   percentage: {
     fontSize: 20,
@@ -23,22 +25,6 @@ export const styles = StyleSheet.create({
     color: "gray",
     marginTop: 10,
     fontFamily: "Courier New",
-  },
-  progressBar: {
-    width: "100%",
-    height: 10,
-    marginTop: 5,
-    borderRadius: 5,
-    overflow: "hidden",
-    backgroundColor: "#000", // Cor de fundo da barra de progresso
-    shadowColor: "#000", // Cor da sombra
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.8,
-    shadowRadius: 2,
-    elevation: 3,
   },
   content: {
     flex: 1,
@@ -60,5 +46,15 @@ export const styles = StyleSheet.create({
     borderRadius: 25,
     color: "blue",
     backgroundColor: "#3690d9",
+  },
+  emptyList: {
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    width: "100%",
+    height: 400,
+  },
+  emptyText: {
+    color: "#fff",
   },
 });

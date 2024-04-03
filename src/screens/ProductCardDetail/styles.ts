@@ -2,41 +2,43 @@ import { StyleSheet } from "react-native";
 
 export const styles = StyleSheet.create({
   container: {
+    backgroundColor: "#1B1B1B",
     flex: 1,
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
-    backgroundColor: "#fff",
   },
   headerContainer: {
     display: "flex",
-    padding: 20,
+    padding: 10,
+  },
+  goBackButtonContainer: {
+    width: "100%",
+    marginBottom: 5,
   },
   content: {
     flex: 1,
-    display: "flex",
+    paddingTop: 20,
     width: "100%",
+    paddingBottom: 20,
   },
   imageContainer: {
     width: "100%",
     height: 300,
   },
   image: {
-    width: "100%",
     height: "100%",
+    width: "80%",
     borderRadius: 10,
     alignSelf: "center",
   },
   title: {
     textAlign: "left",
-    marginTop: 10,
+    marginTop: 15,
+    marginLeft: 10,
+    marginBottom: 10,
+    color: "#fff",
   },
   detailContainer: {
+    flex: 1,
     paddingHorizontal: 20,
-    flex: 1,
-  },
-  infoContainer: {
-    flex: 1,
   },
   valueContainer: {
     display: "flex",
@@ -47,27 +49,11 @@ export const styles = StyleSheet.create({
     marginBottom: 10,
   },
   progressContainer: {
-    marginTop: 30,
+    marginTop: 10,
     display: "flex",
   },
-  progressBar: {
-    width: "100%",
-    height: 20,
-    marginTop: 5,
-    borderRadius: 8,
-    overflow: "hidden",
-    backgroundColor: "#000", // Cor de fundo da barra de progresso
-    shadowColor: "#000", // Cor da sombra
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.8,
-    shadowRadius: 2,
-    elevation: 3,
-  },
   editContainer: {
-    marginBottom: 20,
+    marginVertical: 20,
   },
   buttonsContainer: {
     marginTop: 10,
@@ -76,11 +62,15 @@ export const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "space-between",
     gap: 10,
+    marginBottom: 20,
   },
   addButton: {
-    backgroundColor: "#75975e",
+    backgroundColor: "#D3FA3A",
   },
   removeButton: {
     backgroundColor: "#f94449",
+  },
+  whiteText: {
+    color: "#fff",
   },
 });

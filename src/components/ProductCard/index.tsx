@@ -1,6 +1,6 @@
 import { Image, View } from "react-native";
 import { styles } from "./styles";
-import { Typography } from "components";
+import { ProgressBar, Typography } from "components";
 import { useProductCardViewController } from "./useProductCardViewController";
 
 export type ProductCardType = {
@@ -43,7 +43,7 @@ export const ProductCard = ({
           </View>
           <View style={styles.valueContainer}>
             <Typography variant="subtitle" style={styles.valueTitle}>
-              Restam:
+              Quanto você tem:
             </Typography>
             <Typography variant="body" style={styles.value}>
               {formattedRemainingValue}
@@ -51,21 +51,7 @@ export const ProductCard = ({
           </View>
         </View>
         <View style={styles.cardProgress}>
-          <Typography variant="caption" style={styles.cardPercentage}>
-            {percentage}
-          </Typography>
-          <View style={styles.progressBar}>
-            <View
-              style={{
-                ...styles.progressBar,
-                backgroundColor: "green",
-                marginTop: 0,
-                width: `${
-                  percentage ? Number(percentage.replace("%", "")) : 0
-                }%`,
-              }}
-            />
-          </View>
+          <ProgressBar size="medium" progress={percentage} />
         </View>
       </View>
     </View>

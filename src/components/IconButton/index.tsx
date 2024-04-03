@@ -9,7 +9,8 @@ interface IconButtonProps {
   size?: number;
   color?: string;
   backgroundColor?: string;
-  style?: ViewStyle;
+  style?: ViewStyle | ViewStyle[];
+  disabled?: boolean;
 }
 
 export const IconButton: React.FC<IconButtonProps> = ({
@@ -19,6 +20,7 @@ export const IconButton: React.FC<IconButtonProps> = ({
   color = "#FFFFFF",
   backgroundColor = "#007bff",
   style,
+  disabled = true,
 }) => {
   return (
     <TouchableOpacity
@@ -29,6 +31,7 @@ export const IconButton: React.FC<IconButtonProps> = ({
         style,
       ]}
       onPress={onPress}
+      disabled={disabled}
     >
       <Feather name={icon} size={size} color={color} />
     </TouchableOpacity>

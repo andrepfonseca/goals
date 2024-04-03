@@ -10,7 +10,7 @@ export const useProductViewModel = ({
 }) => {
   return {
     price: formatCurrency(price),
-    remainingValue: formatCurrency(remainingValue),
+    remainingValue: formatCurrency(price - remainingValue),
     percentage: calculatePercentage(price, remainingValue),
   };
 };
