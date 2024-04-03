@@ -20,6 +20,7 @@ export const Progress = ({ navigation }: any) => {
   };
 
   function percentage() {
+    if (!items.length) return "0%";
     const data = items.reduce(
       (acc, item) => {
         return {
